@@ -1,0 +1,41 @@
+@model IEnumerable<CategoryTopSpender>
+@{
+    ViewData["Title"] = "Admin - Top Spenders by Category";
+}
+
+<div class="fm-card mb-3">
+    <h2 class="h5 mb-2 text-white">Top spender per category</h2>
+    <p class="text-muted mb-0">For each category, this shows the user who spent the most and their total expense.</p>
+</div>
+
+<div class="fm-card">
+    @if (!Model.Any())
+    {
+        <p class="text-muted mb-0">No expenses available to calculate leaders.</p>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="fm-report-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>User</th>
+                        <th>Total Amount (₹)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var row in Model)
+                {
+                    <tr>
+                        <td>@row.CategoryName</td>
+                        <td>@row.Username</td>
+                        <td>₹@row.TotalAmount.ToString("N2")</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+

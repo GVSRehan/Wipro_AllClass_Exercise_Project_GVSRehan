@@ -1,0 +1,53 @@
+@model IEnumerable<Expense>
+@{
+    ViewData["Title"] = "My Expenses";
+}
+
+<div class="fm-card mb-4">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <h3 class="h6 mb-0 text-white">All expenses</h3>
+        <div class="d-flex gap-2">
+            <a class="btn btn-primary btn-sm" asp-action="Create">Add Expense</a>
+            <a class="btn btn-outline-secondary btn-sm" asp-action="Report">View Report</a>
+        </div>
+    </div>
+</div>
+
+<div class="fm-card">
+    @if (!Model.Any())
+    {
+        <p class="mb-0 text-muted">No expenses found. Click <strong>Add Expense</strong> to create one.</p>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="fm-report-table">
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-nowrap">₹@item.Amount.ToString("N2")</td>
+                        <td>@item.CategoryId</td>
+                        <td>@item.Date.ToString("dd-MMM-yyyy")</td>
+                        <td>@(item.Description ?? "-")</td>
+                        <td class="text-nowrap">
+                            <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-route-id="@item.ExpenseId">Edit</a>
+                            <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@item.ExpenseId">Delete</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+

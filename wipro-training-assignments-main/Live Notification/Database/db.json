@@ -1,0 +1,64 @@
+{
+  "notifications": [
+    {
+      "id": 1773139678666,
+      "title": "BGV",
+      "message": "Complete BGV to ensure smooth process",
+      "time": "16:17:58"
+    },
+    {
+      "id": 1773140045313,
+      "title": "Regarding notification Project",
+      "message": "Created dual admin successfully",
+      "time": "16:24:05"
+    },
+    {
+      "id": 1773141161728,
+      "title": "Red Alret",
+      "message": "B2 in air head to safe area",
+      "time": "16:42:41"
+    },
+    {
+      "id": 1773141206442,
+      "title": "Completed all quizes",
+      "message": "Before Course completion ",
+      "time": "16:43:26"
+    }
+  ],
+  "users": [
+    {
+      "id": "71x48gz3u05",
+      "firstName": "Admin",
+      "age": 33,
+      "roleId": "71x48gz3u05"
+    },
+    {
+      "id": "admin2",
+      "firstName": "Super Admin",
+      "age": 35,
+      "roleId": "71x48gz3u05"
+    },
+    {
+      "id": "user",
+      "firstName": "Sai",
+      "age": 22,
+      "roleId": "role2"
+    },
+    {
+      "id": "user2",
+      "firstName": "Gurram Venkata Sai Rehan",
+      "age": 22,
+      "roleId": "role2"
+    }
+  ],
+  "roles": [
+    {
+      "id": "71x48gz3u05",
+      "name": "admin"
+    },
+    {
+      "id": "role2",
+      "name": "user"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    var username = ViewBag.Username as string ?? "Guest";
+}
+
+<div class="fm-dashboard-grid">
+    <div class="fm-card">
+        <div class="fm-card-title">Welcome</div>
+        <div class="fm-card-value">@username</div>
+        <p class="mt-2 mb-2 text-muted">Manage users and track all your daily expenses in one place.</p>
+    </div>
+
+    <div class="fm-card">
+        <div class="fm-card-title">Quick Actions</div>
+        <div class="fm-kpi-row mb-3">
+            <div class="fm-kpi-item">
+                <span class="badge bg-success-subtle text-success border border-success-subtle">✔</span>
+                <strong>Add</strong> new expense
+            </div>
+            <div class="fm-kpi-item">
+                <span class="badge bg-info-subtle text-info border border-info-subtle">📊</span>
+                View monthly report
+            </div>
+        </div>
+        <div class="fm-action-row">
+            <a class="btn btn-sm fm-btn-primary" asp-controller="Finance" asp-action="Create">Add Expense</a>
+            <a class="btn btn-sm fm-btn-outline" asp-controller="Finance" asp-action="Index">View All Expenses</a>
+        </div>
+    </div>
+
+    <div class="fm-card">
+        <div class="fm-card-title">Reports</div>
+        <p class="mb-3 text-muted">Analyze spending patterns by day, week, month or year.</p>
+        <div class="fm-action-row">
+            <a class="btn btn-sm fm-btn-primary" asp-controller="Finance" asp-action="Report">Open Report</a>
+        </div>
+    </div>
+</div>

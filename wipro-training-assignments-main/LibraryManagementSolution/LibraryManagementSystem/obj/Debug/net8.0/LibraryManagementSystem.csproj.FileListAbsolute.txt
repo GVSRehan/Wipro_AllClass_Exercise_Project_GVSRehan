@@ -1,0 +1,11 @@
+/media/sai_rehan/141452C31452A78E/Wipro/LibraryManagementSolution/LibraryManagementSystem/bin/Debug/net8.0/LibraryManagementSystem.deps.json
+/media/sai_rehan/141452C31452A78E/Wipro/LibraryManagementSolution/LibraryManagementSystem/bin/Debug/net8.0/LibraryManagementSystem.dll
+/media/sai_rehan/141452C31452A78E/Wipro/LibraryManagementSolution/LibraryManagementSystem/bin/Debug/net8.0/LibraryManagementSystem.pdb
+/media/sai_rehan/141452C31452A78E/Wipro/LibraryManagementSolution/LibraryManagementSystem/obj/Debug/net8.0/LibraryManagementSystem.GeneratedMSBuildEditorConfig.editorconfig
+/media/sai_rehan/141452C31452A78E/Wipro/LibraryManagementSolution/LibraryManagementSystem/obj/Debug/net8.0/LibraryManagementSystem.AssemblyInfoInputs.cache
+/media/sai_rehan/141452C31452A78E/Wipro/LibraryManagementSolution/LibraryManagementSystem/obj/Debug/net8.0/LibraryManagementSystem.AssemblyInfo.cs
+/media/sai_rehan/141452C31452A78E/Wipro/LibraryManagementSolution/LibraryManagementSystem/obj/Debug/net8.0/LibraryManagementSystem.csproj.CoreCompileInputs.cache
+/media/sai_rehan/141452C31452A78E/Wipro/LibraryManagementSolution/LibraryManagementSystem/obj/Debug/net8.0/LibraryManagementSystem.dll
+/media/sai_rehan/141452C31452A78E/Wipro/LibraryManagementSolution/LibraryManagementSystem/obj/Debug/net8.0/refint/LibraryManagementSystem.dll
+/media/sai_rehan/141452C31452A78E/Wipro/LibraryManagementSolution/LibraryManagementSystem/obj/Debug/net8.0/LibraryManagementSystem.pdb
+/media/sai_rehan/141452C31452A78E/Wipro/LibraryManagementSolution/LibraryManagementSystem/obj/Debug/net8.0/ref/LibraryManagementSystem.dll

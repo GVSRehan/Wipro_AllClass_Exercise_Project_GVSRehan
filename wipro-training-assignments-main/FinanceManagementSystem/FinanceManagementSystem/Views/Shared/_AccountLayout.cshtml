@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Finance</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/FinanceManagementSystem.styles.css" asp-append-version="true" />
+</head>
+<body class="fm-body">
+    <div class="fm-shell">
+        <aside class="fm-sidebar">
+            <div class="fm-brand">
+                <span class="fm-logo-circle">₹</span>
+                <div>
+                    <div class="fm-brand-title">Finance</div>
+                    <div class="fm-brand-subtitle">Management System</div>
+                </div>
+            </div>
+            <nav class="fm-nav">
+                <a class="fm-nav-item" asp-controller="Home" asp-action="Index"><span class="fm-nav-icon">🏠</span><span>Dashboard</span></a>
+                <a class="fm-nav-item" asp-controller="Finance" asp-action="Index"><span class="fm-nav-icon">💸</span><span>Expenses</span></a>
+                <a class="fm-nav-item" asp-controller="Finance" asp-action="Report"><span class="fm-nav-icon">📊</span><span>Reports</span></a>
+            </nav>
+            <div class="fm-nav mt-auto">
+                @if (ViewBag.IsLoggedIn == true)
+                {
+                    <span class="fm-nav-user">@(ViewBag.Username)</span>
+                    <a class="fm-nav-item" asp-controller="Account" asp-action="Logout"><span class="fm-nav-icon">🚪</span><span>Logout</span></a>
+                }
+                else
+                {
+                    <a class="fm-nav-item" asp-controller="Account" asp-action="Login"><span class="fm-nav-icon">🔑</span><span>Login</span></a>
+                    <a class="fm-nav-item" asp-controller="Account" asp-action="Register"><span class="fm-nav-icon">➕</span><span>Register</span></a>
+                }
+            </div>
+        </aside>
+        <div class="fm-main fm-main-account">
+            <main class="fm-account-content">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

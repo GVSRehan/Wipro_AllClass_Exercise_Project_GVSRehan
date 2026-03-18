@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>File System Demo</title>
+</head>
+
+<body>
+
+<h1>Node.js File System Operations</h1>
+
+<button onclick="createFile()">Create</button>
+<button onclick="readFile()">Read</button>
+<button onclick="updateFile()">Update</button>
+<button onclick="renameFile()">Rename</button>
+<button onclick="deleteFile()">Delete</button>
+
+<p id="result"></p>
+
+<script>
+
+function createFile() {
+ fetch("/create",{method:"POST"})
+ .then(res=>res.text())
+ .then(data=>document.getElementById("result").innerText=data);
+}
+
+function readFile() {
+ fetch("/read")
+ .then(res=>res.text())
+ .then(data=>document.getElementById("result").innerText=data);
+}
+
+function updateFile() {
+ fetch("/update",{method:"POST"})
+ .then(res=>res.text())
+ .then(data=>document.getElementById("result").innerText=data);
+}
+
+function renameFile() {
+ fetch("/rename",{method:"POST"})
+ .then(res=>res.text())
+ .then(data=>document.getElementById("result").innerText=data);
+}
+
+function deleteFile() {
+ fetch("/delete",{method:"DELETE"})
+ .then(res=>res.text())
+ .then(data=>document.getElementById("result").innerText=data);
+}
+
+</script>
+
+</body>
+</html>

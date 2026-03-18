@@ -1,0 +1,43 @@
+@model Expense
+@{
+    ViewData["Title"] = "Add Expense";
+}
+
+<div class="fm-form-card">
+    <form asp-action="Create" method="post" class="fm-expense-form">
+        <div asp-validation-summary="ModelOnly" class="fm-form-error"></div>
+
+        <div class="fm-form-field">
+            <label asp-for="Amount" class="fm-form-label">Amount (₹)</label>
+            <input asp-for="Amount" class="form-control fm-form-input" type="number" step="0.01" placeholder="0.00" />
+            <span asp-validation-for="Amount" class="fm-form-field-error"></span>
+        </div>
+
+        <div class="fm-form-field">
+            <label asp-for="CategoryId" class="fm-form-label">Category</label>
+            <select asp-for="CategoryId" asp-items="@(ViewBag.Categories as SelectList)" class="form-select fm-form-input"></select>
+            <span asp-validation-for="CategoryId" class="fm-form-field-error"></span>
+        </div>
+
+        <div class="fm-form-field">
+            <label asp-for="Date" class="fm-form-label">Date</label>
+            <input asp-for="Date" type="date" class="form-control fm-form-input" />
+            <span asp-validation-for="Date" class="fm-form-field-error"></span>
+        </div>
+
+        <div class="fm-form-field">
+            <label asp-for="Description" class="fm-form-label">Description</label>
+            <textarea asp-for="Description" class="form-control fm-form-input" rows="2" placeholder="Optional notes"></textarea>
+            <span asp-validation-for="Description" class="fm-form-field-error"></span>
+        </div>
+
+        <div class="fm-form-actions">
+            <button type="submit" class="btn btn-primary fm-btn-submit">Save</button>
+            <a asp-action="Index" class="btn btn-outline-secondary fm-btn-back">Back to List</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

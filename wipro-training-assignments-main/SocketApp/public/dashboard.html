@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Live Dashboard</title>
+</head>
+
+<body>
+
+<h2>Live Notifications</h2>
+
+<ul id="notifications"></ul>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+
+const socket = io();
+
+socket.on("loadNotifications", (data) => {
+    data.forEach(addNotification);
+});
+
+socket.on("newNotification", (data) => {
+    addNotification(data);
+});
+
+function addNotification(notification) {
+
+    const li = document.createElement("li");
+
+    li.innerHTML =
+        "<b>" + notification.title + "</b>: " +
+        notification.message +
+        " (" + notification.time + ")";
+
+    document.getElementById("notifications").appendChild(li);
+
+}
+
+</script>
+
+</body>
+</html>

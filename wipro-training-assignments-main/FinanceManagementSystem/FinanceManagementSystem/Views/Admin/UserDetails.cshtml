@@ -1,0 +1,97 @@
+@using System.Text.Json
+@model AdminUserSummaryViewModel
+@{
+    ViewData["Title"] = $"Admin - {Model.User.Username}";
+    var labels = Model.Categories.Select(c => c.CategoryName).ToArray();
+    var values = Model.Categories.Select(c => c.TotalAmount).ToArray();
+    var labelsJson = JsonSerializer.Serialize(labels);
+    var valuesJson = JsonSerializer.Serialize(values);
+}
+
+<div class="fm-card mb-3">
+    <h2 class="h5 mb-1 text-white">User summary</h2>
+    <p class="text-muted mb-2">Username: <strong>@Model.User.Username</strong> · Email: <strong>@Model.User.Email</strong></p>
+    <p class="text-muted mb-0">Total expense: <strong>₹@Model.TotalAmount.ToString("N2")</strong></p>
+</div>
+
+<div class="fm-chart-container mb-3">
+    <h3 class="h6 mb-3 text-white">Expenses by category (percentage)</h3>
+    <div style="max-width: 420px; margin: 0 auto;">
+        <canvas id="categoryPie" height="220"></canvas>
+    </div>
+</div>
+
+<div class="fm-card">
+    <h3 class="h6 mb-3 text-white">Category breakdown</h3>
+    @if (!Model.Categories.Any())
+    {
+        <p class="text-muted mb-0">No expenses found for this user.</p>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="fm-report-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Amount (₹)</th>
+                        <th>Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var c in Model.Categories)
+                {
+                    var pct = Model.TotalAmount > 0 ? (double)(c.TotalAmount / Model.TotalAmount * 100) : 0;
+                    <tr>
+                        <td>@c.CategoryName</td>
+                        <td>₹@c.TotalAmount.ToString("N2")</td>
+                        <td>@pct.ToString("0.0")%</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script>
+        (function () {
+            var labels = @Html.Raw(@labelsJson);
+            var data = @Html.Raw(@valuesJson);
+
+            if (!labels || labels.length === 0) {
+                return;
+            }
+
+            var ctx = document.getElementById('categoryPie').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: [
+                            '#22c55e', '#22d3ee', '#6366f1', '#f97316', '#e11d48',
+                            '#a855f7', '#14b8a6', '#facc15'
+                        ],
+                        borderColor: '#020617',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#e5e7eb' }
+                        }
+                    }
+                }
+            });
+        })();
+    </script>
+}
+

@@ -1,0 +1,144 @@
+@model IEnumerable<Expense>
+@{
+    ViewData["Title"] = "Expense Report";
+    var fromVal = ViewBag.From as string ?? "";
+    var toVal = ViewBag.To as string ?? "";
+}
+
+<div class="fm-card mb-4">
+    <div class="row g-3 align-items-end">
+        <div class="col-md-3">
+            <label class="form-label" for="from">From Date</label>
+            <input type="date" id="from" name="from" class="form-control" value="@fromVal" form="report-form" />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label" for="to">To Date</label>
+            <input type="date" id="to" name="to" class="form-control" value="@toVal" form="report-form" />
+        </div>
+        <div class="col-md-4 d-flex gap-2">
+            <button type="submit" class="btn btn-primary" form="report-form">Filter</button>
+            <a asp-action="Report" class="btn btn-outline-secondary">Clear</a>
+        </div>
+    </div>
+    <form id="report-form" method="get" asp-action="Report" class="d-none"></form>
+</div>
+
+<div class="fm-chart-container">
+    <h3 class="h6 mb-3 text-white">Expenses by Date</h3>
+    <canvas id="expenseChart" height="120"></canvas>
+</div>
+
+<div class="fm-card">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="h6 mb-0 text-white">Expense list</h3>
+        <span id="totalAmount" class="fm-total-badge">Total: ₹0</span>
+    </div>
+    <div class="table-responsive">
+        <table class="fm-report-table" id="reportTable">
+            <thead>
+                <tr>
+                    <th>Amount</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody id="reportTableBody">
+                <tr><td colspan="4" class="text-center text-muted">Loading…</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script>
+(function () {
+    var chart = null;
+
+    function getQuery(name) {
+        var u = new URL(window.location.href);
+        return u.searchParams.get(name) || '';
+    }
+
+    function loadReport() {
+        var from = document.getElementById('from').value || getQuery('from');
+        var to = document.getElementById('to').value || getQuery('to');
+        var url = '/Finance/ReportData?from=' + encodeURIComponent(from) + '&to=' + encodeURIComponent(to);
+
+        fetch(url)
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+                if (data.error) {
+                    document.getElementById('reportTableBody').innerHTML = '<tr><td colspan="4" class="text-center text-warning">' + data.error + '</td></tbody>';
+                    return;
+                }
+
+                document.getElementById('totalAmount').textContent = 'Total: ₹' + (data.total || 0).toFixed(2);
+
+                var tbody = document.getElementById('reportTableBody');
+                if (!data.expenses || data.expenses.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No expenses in this period.</td></tr>';
+                } else {
+                    tbody.innerHTML = data.expenses.map(function (e) {
+                        return '<tr><td>₹' + Number(e.amount).toFixed(2) + '</td><td>' + (e.categoryId || '-') + '</td><td>' + (e.date || '') + '</td><td>' + (e.description || '') + '</td></tr>';
+                    }).join('');
+                }
+
+                var labels = data.chartLabels || [];
+                var amounts = data.chartAmounts || [];
+                if (labels.length === 0 && data.expenses && data.expenses.length > 0) {
+                    var byDate = {};
+                    data.expenses.forEach(function (e) {
+                        var d = e.date;
+                        if (!byDate[d]) byDate[d] = 0;
+                        byDate[d] += Number(e.amount);
+                    });
+                    labels = Object.keys(byDate).sort();
+                    amounts = labels.map(function (k) { return byDate[k]; });
+                }
+
+                if (chart) chart.destroy();
+                var ctx = document.getElementById('expenseChart').getContext('2d');
+                chart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Expense (₹)',
+                            data: amounts,
+                            backgroundColor: 'rgba(34, 197, 94, 0.6)',
+                            borderColor: 'rgb(34, 197, 94)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: { color: '#94a3b8' },
+                                grid: { color: 'rgba(148, 163, 184, 0.2)' }
+                            },
+                            x: {
+                                ticks: { color: '#94a3b8', maxRotation: 45 },
+                                grid: { color: 'rgba(148, 163, 184, 0.2)' }
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(function (err) {
+                document.getElementById('reportTableBody').innerHTML = '<tr><td colspan="4" class="text-center text-danger">Failed to load data.</td></tr>';
+                console.error(err);
+            });
+    }
+
+    loadReport();
+})();
+    </script>
+}

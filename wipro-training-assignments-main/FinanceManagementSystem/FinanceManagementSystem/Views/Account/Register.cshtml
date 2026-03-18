@@ -1,0 +1,42 @@
+@model User
+@{
+    ViewData["Title"] = "Create account";
+    Layout = "_AccountLayout";
+}
+
+<div class="fm-auth-card">
+    <h1 class="fm-auth-title">Create account</h1>
+    <p class="fm-auth-subtitle">Register to start tracking expenses</p>
+
+    <form asp-action="Register" method="post" class="fm-auth-form">
+        <div asp-validation-summary="ModelOnly" class="fm-auth-error"></div>
+
+        <div class="fm-auth-field">
+            <label asp-for="Username" class="fm-auth-label">Username</label>
+            <input asp-for="Username" class="fm-auth-input" placeholder="Choose a username" autocomplete="username" />
+            <span asp-validation-for="Username" class="fm-auth-field-error"></span>
+        </div>
+
+        <div class="fm-auth-field">
+            <label asp-for="Password" class="fm-auth-label">Password</label>
+            <input asp-for="Password" type="password" class="fm-auth-input" placeholder="Choose a password" autocomplete="new-password" />
+            <span asp-validation-for="Password" class="fm-auth-field-error"></span>
+        </div>
+
+        <div class="fm-auth-field">
+            <label asp-for="Email" class="fm-auth-label">Email</label>
+            <input asp-for="Email" class="fm-auth-input" type="email" placeholder="you@example.com" autocomplete="email" />
+            <span asp-validation-for="Email" class="fm-auth-field-error"></span>
+        </div>
+
+        <button type="submit" class="fm-auth-submit">Create account</button>
+
+        <p class="fm-auth-switch">
+            Already have an account? <a asp-controller="Account" asp-action="Login" class="fm-auth-link">Sign in</a>
+        </p>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>User Dashboard</title>
+</head>
+
+<body>
+<h1>Welcome, Gurram Venkata Sai Rehan</h1>
+<h2>Notifications</h2>
+
+<ul id="list"></ul>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+
+const socket = io({
+    query:{
+        userId:"user2"
+    }
+});
+
+const list = document.getElementById("list");
+
+socket.on("loadNotifications",(data)=>{
+
+data.forEach(addNotification);
+
+});
+
+socket.on("newNotification",(data)=>{
+
+addNotification(data);
+
+});
+
+function addNotification(data){
+
+const li = document.createElement("li");
+
+li.innerText = data.title + " : " + data.message + " ("+data.time+")";
+
+list.appendChild(li);
+
+}
+
+</script>
+
+</body>
+</html>

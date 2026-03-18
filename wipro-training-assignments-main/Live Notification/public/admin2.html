@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin</title>
+</head>
+
+<body>
+
+<h2>Admin Panel</h2>
+
+<input id="title" placeholder="Title">
+<input id="message" placeholder="Message">
+
+<button onclick="sendNotification()">Send</button>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+
+const socket = io({
+    query:{
+        userId:"admin2"
+    }
+});
+
+function sendNotification(){
+
+const title = document.getElementById("title").value;
+const message = document.getElementById("message").value;
+
+const data = {
+id: Date.now(),
+title:title,
+message:message,
+time:new Date().toLocaleTimeString()
+};
+
+socket.emit("sendNotification",data);
+
+}
+
+</script>
+
+</body>
+</html>
